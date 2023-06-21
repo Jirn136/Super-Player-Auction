@@ -6,4 +6,6 @@ import javax.inject.Singleton
 @Singleton
 interface TeamListRepository {
     suspend fun retrieveTeamList(): ArrayList<Team>
+
+    suspend fun insertTeam(team: Team): Boolean
 }

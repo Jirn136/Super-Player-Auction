@@ -34,6 +34,7 @@ class CreateTeamActivity : AppCompatActivity() {
                 val dialog = CreateTeamDialog(this@CreateTeamActivity)
                 dialog.showDialog { teamName ->
                     Log.i(TAG, "onCreate: edt:: $teamName")
+                    viewModel.insertTeam(teamName)
                 }
             }
         }
@@ -41,10 +42,15 @@ class CreateTeamActivity : AppCompatActivity() {
 
     private fun initObserver() {
         viewModel.teamList.observe(this) {
-            if (it.isNotEmpty())
-                initRecyclerView(it)
-            else
-                "No Teams found".toToast(this)
+            if (it.second.isNotEmpty()) {
+                if(!it.first) initRecyclerView(it.second)
+                else teamAdapter.updateAdapter(it.second)
+            }
+            else "No Teams found".toToast(this)
+        }
+        viewModel.insertTeam.observe(this) {
+            if (it) viewModel.retrieveTeamList()
+            else "Team creation failed, Please try again later".toToast(this)
         }
     }
 

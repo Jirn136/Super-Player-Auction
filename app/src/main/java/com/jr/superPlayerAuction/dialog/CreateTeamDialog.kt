@@ -17,7 +17,7 @@ class CreateTeamDialog(private val activity: Activity) {
         val inflater: LayoutInflater = activity.layoutInflater
         val dialogBinding = DialogCreateTeamBinding.inflate(inflater)
         dialog.apply {
-            setCancelable(false)
+            setCancelable(true)
             setView(dialogBinding.root)
         }
         val alertDialog = dialog.create()

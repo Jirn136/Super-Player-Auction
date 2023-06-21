@@ -14,14 +14,23 @@ import javax.inject.Inject
 class TeamListViewModel @Inject constructor(private val teamListRepository: TeamListRepository) :
     ViewModel() {
 
-    val teamList: LiveData<ArrayList<Team>> get() = mTeamList
-    private val mTeamList = MutableLiveData<ArrayList<Team>>()
+    val teamList: LiveData<Pair<Boolean, ArrayList<Team>>> get() = mTeamList
+    private val mTeamList = MutableLiveData<Pair<Boolean, ArrayList<Team>>>()
 
-    fun retrieveTeamList() {
+    val insertTeam: LiveData<Boolean> get() = mInsertTeam
+    private val mInsertTeam = MutableLiveData<Boolean>()
+
+    fun retrieveTeamList(afterInsert: Boolean = false) {
         viewModelScope.launch {
             mTeamList.apply {
-                postValue(teamListRepository.retrieveTeamList())
+                postValue(Pair(afterInsert, teamListRepository.retrieveTeamList()))
             }
+        }
+    }
+
+    fun insertTeam(teamName: String) {
+        viewModelScope.launch {
+            mInsertTeam.postValue(teamListRepository.insertTeam(Team(teamName)))
         }
     }
 }

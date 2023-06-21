@@ -18,7 +18,8 @@ class DatabaseModule {
     @Provides
     @Singleton
     fun provideAppDatabase(@ApplicationContext context: Context): AppDatabase =
-        Room.databaseBuilder(context, AppDatabase::class.java, "PlayerAuction").build()
+        Room.databaseBuilder(context, AppDatabase::class.java, "PlayerAuction")
+            .allowMainThreadQueries().build()
 
     @Provides
     fun provideTeamDao(appDatabase: AppDatabase): TeamDao = appDatabase.teamDao()
