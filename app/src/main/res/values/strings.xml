@@ -1,0 +1,20 @@
+<resources>
+    <string name="app_name">SuperPlayerAuction</string>
+    <string name="title_activity_create_team">CreateTeamActivity</string>
+    <!-- Strings used for fragments for navigation -->
+    <string name="create_team">Create Team</string>
+    <string name="add_player">Add Player</string>
+    <string name="player_name">Player Name</string>
+    <string name="player_age">Player Age</string>
+    <string name="batsman">Batsman</string>
+    <string name="bowler">Bowler</string>
+    <string name="all_rounder">All-Rounder</string>
+    <string name="left_hand_batsman">Left hand batsman</string>
+    <string name="right_hand_batsman">Right hand batsman</string>
+    <string name="spin">Spin</string>
+    <string name="seam">Seam</string>
+    <string name="sold_amount">Sold Amount</string>
+    <string name="save">Save</string>
+    <string name="team_name">Team name</string>
+    <string name="redirect">Redirect</string>
+</resources>
