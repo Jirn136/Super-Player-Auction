@@ -37,7 +37,7 @@ class PlayerListActivity : AppCompatActivity() {
         binding.apply {
             rvPlayerList.apply {
                 layoutManager = LinearLayoutManager(this@PlayerListActivity)
-                playerAdapter = PlayerListAdapter(this@PlayerListActivity, playerList) { player ->
+                playerAdapter = PlayerListAdapter(this@PlayerListActivity) { player ->
                     launchActivity<AddPlayerActivity> {
                         putExtra("player", player)
                     }
@@ -49,7 +49,7 @@ class PlayerListActivity : AppCompatActivity() {
 
     private fun initObservers() {
         playerListViewModel.retrievePlayerList.observe(this) {
-            if (it.isNotEmpty()) initRecyclerView()
+            if (it.isNotEmpty()) playerAdapter.submitList(it)
             else "No Player Found".toToast(this)
         }
     }
