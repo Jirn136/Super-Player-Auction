@@ -8,7 +8,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.jr.superPlayerAuction.adapter.TeamAdapter
 import com.jr.superPlayerAuction.databinding.ActivityCreateTeamBinding
 import com.jr.superPlayerAuction.dialog.CreateTeamDialog
-import com.jr.superPlayerAuction.model.Team
 import com.jr.superPlayerAuction.utils.Constants
 import com.jr.superPlayerAuction.utils.TAG
 import com.jr.superPlayerAuction.utils.launchActivity
@@ -26,7 +25,7 @@ class CreateTeamActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityCreateTeamBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        viewModel.retrieveTeamList()
+        initRecyclerView()
         initObserver()
         binding.apply {
             fabCreateTeam.setOnClickListener {
@@ -40,25 +39,29 @@ class CreateTeamActivity : AppCompatActivity() {
         }
     }
 
+    override fun onResume() {
+        super.onResume()
+        viewModel.retrieveTeamList()
+    }
+
     private fun initObserver() {
         viewModel.teamList.observe(this) {
             if (it.second.isNotEmpty()) {
-                if(!it.first) initRecyclerView(it.second)
-                else teamAdapter.updateAdapter(it.second)
-            }
-            else "No Teams found".toToast(this)
+                teamAdapter.submit(it.second)
+
+            } else "No Teams found".toToast(this)
         }
         viewModel.insertTeam.observe(this) {
-            if (it) viewModel.retrieveTeamList()
+            if (it) viewModel.retrieveTeamList(afterInsert = true)
             else "Team creation failed, Please try again later".toToast(this)
         }
     }
 
-    private fun initRecyclerView(teams: ArrayList<Team>) {
+    private fun initRecyclerView() {
         binding.apply {
             rvTeamList.apply {
                 layoutManager = LinearLayoutManager(this@CreateTeamActivity)
-                teamAdapter = TeamAdapter(teams) { teamName ->
+                teamAdapter = TeamAdapter { teamName ->
                     launchActivity<PlayerListActivity> {
                         putExtra(Constants.TEAM_NAME, teamName)
                     }

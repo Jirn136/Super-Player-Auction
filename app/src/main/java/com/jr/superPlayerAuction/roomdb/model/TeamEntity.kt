@@ -5,6 +5,6 @@ import androidx.room.PrimaryKey
 
 @Entity(tableName = "Team")
 data class TeamEntity(
-    @PrimaryKey(autoGenerate = true) val id :Int = 0,
-    val teamName: String
+    @PrimaryKey(autoGenerate = true) val id: Int = 0,
+    val teamName: String,
 )

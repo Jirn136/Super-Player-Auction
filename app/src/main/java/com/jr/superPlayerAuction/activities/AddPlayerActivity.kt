@@ -39,6 +39,7 @@ class AddPlayerActivity : AppCompatActivity() {
                 }
             }
             btnSave.setOnClickListener {
+
                 Log.i("kanaku", "onCreate: $checkedItem")
             }
         }

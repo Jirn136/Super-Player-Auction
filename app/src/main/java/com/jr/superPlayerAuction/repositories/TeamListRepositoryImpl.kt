@@ -1,6 +1,7 @@
 package com.jr.superPlayerAuction.repositories
 
 import com.jr.superPlayerAuction.model.Team
+import com.jr.superPlayerAuction.repositories.interfaces.TeamListRepository
 import com.jr.superPlayerAuction.roomdb.TeamDao
 import com.jr.superPlayerAuction.utils.convertEntityToModel
 import com.jr.superPlayerAuction.utils.convertTeamToTeamEntity

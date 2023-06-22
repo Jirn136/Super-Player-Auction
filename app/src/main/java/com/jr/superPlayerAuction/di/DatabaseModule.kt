@@ -3,6 +3,7 @@ package com.jr.superPlayerAuction.di
 import android.content.Context
 import androidx.room.Room
 import com.jr.superPlayerAuction.roomdb.AppDatabase
+import com.jr.superPlayerAuction.roomdb.PlayerDao
 import com.jr.superPlayerAuction.roomdb.TeamDao
 import dagger.Module
 import dagger.Provides
@@ -23,4 +24,7 @@ class DatabaseModule {
 
     @Provides
     fun provideTeamDao(appDatabase: AppDatabase): TeamDao = appDatabase.teamDao()
+
+    @Provides
+    fun providePlayerDao(appDatabase: AppDatabase):PlayerDao = appDatabase.playerDao()
 }

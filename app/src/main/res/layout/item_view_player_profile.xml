@@ -42,7 +42,7 @@
         android:layout_width="25dp"
         android:layout_height="25dp"
         android:layout_marginEnd="10dp"
-        android:contentDescription="Speciality"
+        android:contentDescription="Speciality type"
         android:src="@drawable/ic_all_rounder"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
