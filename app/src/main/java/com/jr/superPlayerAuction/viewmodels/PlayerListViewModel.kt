@@ -11,15 +11,24 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class PlayerListViewModel @Inject constructor(private val playerListRepository: PlayerListRepository) :
+class PlayerListViewModel @Inject constructor(private val playerRepository: PlayerListRepository) :
     ViewModel() {
 
     val retrievePlayerList: LiveData<ArrayList<Player>> get() = mRetrievePlayList
     private val mRetrievePlayList = MutableLiveData<ArrayList<Player>>()
 
+    val insertPlayer: LiveData<Boolean> get() = mInsertPlayer
+    private val mInsertPlayer = MutableLiveData<Boolean>()
+
     fun retrievePlayerList(teamName: String) {
         viewModelScope.launch {
-            mRetrievePlayList.postValue(playerListRepository.retrievePlayersList(teamName))
+            mRetrievePlayList.postValue(playerRepository.retrievePlayersList(teamName))
+        }
+    }
+
+    fun insertPlayer(playerModel:Player){
+        viewModelScope.launch {
+            mInsertPlayer.postValue(playerRepository.insertPlayer(playerModel))
         }
     }
 }

@@ -17,5 +17,6 @@
     <string name="save">Save</string>
     <string name="team_name">Team name</string>
     <string name="redirect">Redirect</string>
-    <string name="player_location">Player Location</string>
+    <string name="contact_number">Contact Number</string>
+    <string name="chennai">Chennai</string>
 </resources>

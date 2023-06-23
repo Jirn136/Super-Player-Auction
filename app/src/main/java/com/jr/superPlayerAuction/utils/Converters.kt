@@ -7,7 +7,7 @@ import com.jr.superPlayerAuction.roomdb.model.TeamEntity
 
 internal fun List<TeamEntity>.convertEntityToModel(): ArrayList<Team> {
     val team = arrayListOf<Team>()
-    this.forEach {
+    this.map {
         team.add(Team(teamName = it.teamName))
     }
     return team
@@ -19,11 +19,12 @@ internal fun Team.convertTeamToTeamEntity(): TeamEntity {
 
 internal fun List<PlayerEntity>.convertPlayerEntityToModel(): ArrayList<Player> {
     val player = arrayListOf<Player>()
-    this.forEach {
+    this.map {
         player.add(
             Player(
                 playerName = it.playerName,
                 age = it.age,
+                contactNumber = it.contactNumber,
                 speciality = it.speciality,
                 amount = it.amount,
                 batType = it.batType,
@@ -40,6 +41,7 @@ internal fun Player.convertToPlayerEntity(): PlayerEntity {
     return PlayerEntity(
         playerName = this.playerName,
         age = this.age,
+        contactNumber = this.contactNumber,
         speciality = this.speciality,
         amount = this.amount,
         batType = this.batType,
