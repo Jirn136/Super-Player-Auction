@@ -96,11 +96,12 @@
 
         <RadioGroup
             android:id="@+id/radio_group_type"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="25dp"
             android:layout_marginTop="25dp"
+            android:gravity="center"
             android:orientation="horizontal"
+            app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/edt_age_layout">
 
@@ -110,7 +111,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:text="@string/batsman"
-                android:textSize="16sp" />
+                android:textSize="14sp" />
 
             <RadioButton
                 android:id="@+id/radio_button_bowler"
@@ -119,16 +120,18 @@
                 android:layout_gravity="center"
                 android:layout_marginStart="20dp"
                 android:text="@string/bowler"
-                android:textSize="16sp" />
+                android:textSize="14sp" />
 
             <RadioButton
                 android:id="@+id/radio_button_all_rounder"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
+                android:layout_gravity="end"
                 android:layout_marginStart="20dp"
+                android:ellipsize="end"
+                android:maxLines="1"
                 android:text="@string/all_rounder"
-                android:textSize="16sp" />
+                android:textSize="14sp" />
 
         </RadioGroup>
 
@@ -138,6 +141,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="25dp"
             android:checkedButton="@id/radio_button_batsman"
+            android:gravity="center"
             android:orientation="horizontal"
             android:visibility="gone"
             app:layout_constraintEnd_toEndOf="parent"
@@ -149,8 +153,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
+                android:ellipsize="end"
+                android:maxLines="1"
                 android:text="@string/left_hand_batsman"
-                android:textSize="16sp" />
+                android:textSize="14sp" />
 
             <RadioButton
                 android:id="@+id/radio_button_right_batsman"
@@ -158,8 +164,10 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginStart="20dp"
+                android:ellipsize="end"
+                android:maxLines="1"
                 android:text="@string/right_hand_batsman"
-                android:textSize="16sp" />
+                android:textSize="14sp" />
 
         </RadioGroup>
 
@@ -181,7 +189,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/spin"
-                android:textSize="16sp" />
+                android:textSize="14sp" />
 
             <RadioButton
                 android:id="@+id/radio_button_seam"
@@ -189,7 +197,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="20dp"
                 android:text="@string/seam"
-                android:textSize="16sp" />
+                android:textSize="14sp" />
 
         </RadioGroup>
 

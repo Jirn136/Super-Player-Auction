@@ -22,7 +22,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="25dp"
         android:layout_marginTop="15dp"
-        android:textColor="@color/black"
+        android:textColor="@color/text_color"
         android:textSize="14sp"
         app:layout_constraintStart_toEndOf="@id/img_profile"
         app:layout_constraintTop_toTopOf="parent"

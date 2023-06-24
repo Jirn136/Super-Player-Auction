@@ -19,4 +19,5 @@
     <string name="redirect">Redirect</string>
     <string name="contact_number">Contact Number</string>
     <string name="chennai">Chennai</string>
+    <string name="name_and_number">%1$s, %2$s</string>
 </resources>

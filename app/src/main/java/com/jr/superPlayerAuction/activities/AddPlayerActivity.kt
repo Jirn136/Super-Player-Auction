@@ -157,7 +157,7 @@ class AddPlayerActivity : AppCompatActivity() {
         binding.apply {
             with(playerModel) {
                 Glide.with(this@AddPlayerActivity).load(playerProfile).fitCenter()
-                    .placeholder(R.drawable.ic_add_place_holder)
+                    .placeholder(R.drawable.ic_person)
                     .into(imgPlayer)
                 edtPlayerName.setText(this.playerName)
                 edtPlayerAge.setText(this.age.toString())

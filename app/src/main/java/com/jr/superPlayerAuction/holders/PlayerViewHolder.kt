@@ -13,7 +13,12 @@ class PlayerViewHolder(private val binding: ItemViewPlayerProfileBinding) :
     fun bind(context: Context, player: Player, listener: (player: Player) -> Unit) {
         binding.apply {
             player.apply {
-                tvName.text = playerName
+                tvName.text =
+                    String.format(
+                        context.getString(R.string.name_and_number),
+                        playerName,
+                        age.toString()
+                    )
                 imgType.setImageResource(
                     when (speciality) {
                         Constants.BOWLER -> R.drawable.ic_ball
