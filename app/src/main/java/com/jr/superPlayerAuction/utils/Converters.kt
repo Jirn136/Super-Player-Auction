@@ -24,13 +24,11 @@ internal fun List<PlayerEntity>.convertPlayerEntityToModel(): ArrayList<Player> 
             Player(
                 playerName = it.playerName,
                 age = it.age,
-                contactNumber = it.contactNumber,
                 speciality = it.speciality,
                 amount = it.amount,
                 batType = it.batType,
                 bowlType = it.bowlType,
                 teamName = it.teamName,
-                playerProfile = it.playerProfile
             )
         )
     }
@@ -41,12 +39,10 @@ internal fun Player.convertToPlayerEntity(): PlayerEntity {
     return PlayerEntity(
         playerName = this.playerName,
         age = this.age,
-        contactNumber = this.contactNumber,
         speciality = this.speciality,
         amount = this.amount,
         batType = this.batType,
         bowlType = this.bowlType,
         teamName = this.teamName,
-        playerProfile = this.playerProfile
     )
 }

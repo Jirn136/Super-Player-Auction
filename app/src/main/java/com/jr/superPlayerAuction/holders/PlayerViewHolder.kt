@@ -2,7 +2,6 @@ package com.jr.superPlayerAuction.holders
 
 import android.content.Context
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
 import com.jr.superPlayerAuction.R
 import com.jr.superPlayerAuction.databinding.ItemViewPlayerProfileBinding
 import com.jr.superPlayerAuction.model.Player
@@ -42,9 +41,6 @@ class PlayerViewHolder(private val binding: ItemViewPlayerProfileBinding) :
                     else -> "Right hand batsman"
 
                 }
-
-                Glide.with(context).load(player.playerProfile).centerCrop()
-                    .placeholder(R.drawable.ic_place_holder).into(imgProfile)
 
                 root.setOnClickListener {
                     listener(player)

@@ -5,7 +5,7 @@
     <string name="create_team">Create Team</string>
     <string name="add_player">Add Player</string>
     <string name="player_name">Player Name</string>
-    <string name="player_age">Player Age</string>
+    <string name="player_age">Age</string>
     <string name="batsman">Batsman</string>
     <string name="bowler">Bowler</string>
     <string name="all_rounder">All-Rounder</string>
@@ -20,4 +20,5 @@
     <string name="contact_number">Contact Number</string>
     <string name="chennai">Chennai</string>
     <string name="name_and_number">%1$s, %2$s</string>
+    <string name="speciality_type">Speciality type</string>
 </resources>

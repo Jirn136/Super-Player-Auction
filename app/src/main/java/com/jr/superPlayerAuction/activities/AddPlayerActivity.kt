@@ -1,21 +1,13 @@
 package com.jr.superPlayerAuction.activities
 
-import android.Manifest
-import android.content.Intent
-import android.content.pm.PackageManager
-import android.net.Uri
 import android.os.Build
 import android.os.Bundle
-import android.provider.Settings
 import android.view.View
 import android.widget.RadioButton
-import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.core.widget.doOnTextChanged
-import com.bumptech.glide.Glide
-import com.google.android.material.snackbar.Snackbar
 import com.jr.superPlayerAuction.R
 import com.jr.superPlayerAuction.databinding.ActivityAddPlayerBinding
 import com.jr.superPlayerAuction.di.MediaPreferences
@@ -39,10 +31,8 @@ class AddPlayerActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityAddPlayerBinding
     private var playerName: String = Constants.EMPTY_STRING
-    private var playerContactNumber: String = Constants.EMPTY_STRING
     private var soldAmount: String = Constants.EMPTY_STRING
     private var teamName: String = Constants.EMPTY_STRING
-    private var profileImage: String = Constants.EMPTY_STRING
     private var checkedItem = 0
     private var playerAge: Int = 0
     private var batType: Int = 0
@@ -51,24 +41,6 @@ class AddPlayerActivity : AppCompatActivity() {
     private var fromList: Boolean = false
 
     private lateinit var playerModel: Player
-
-    private val manifestPermission =
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU)
-            Manifest.permission.READ_MEDIA_IMAGES else Manifest.permission.READ_EXTERNAL_STORAGE
-
-    private val imageRequestLauncher =
-        registerForActivityResult(ActivityResultContracts.RequestPermission()) { isGranted ->
-            if (isGranted) {
-                retrieveImageFromGallery()
-            }
-        }
-
-    private val pickImageLauncher =
-        registerForActivityResult(ActivityResultContracts.GetContent()) { uri ->
-            profileImage = uri.toString()
-            Glide.with(this).load(uri).fitCenter().placeholder(R.drawable.ic_add_place_holder)
-                .into(binding.imgPlayer)
-        }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -118,15 +90,12 @@ class AddPlayerActivity : AppCompatActivity() {
     private fun updateLayout() {
         binding.apply {
             setEnabledFalse(
-                imgPlayer,
                 edtAgeLayout,
                 edtAmountLayout,
-                edtContactLayout,
                 edtNameLayout,
                 edtPlayerName,
                 edtAgeLayout,
                 edtPlayerAge,
-                edtPlayerContact,
                 radioGroupType,
                 radioGroupBatType,
                 radioGroupBowlType,
@@ -156,12 +125,8 @@ class AddPlayerActivity : AppCompatActivity() {
     private fun loadDetails() {
         binding.apply {
             with(playerModel) {
-                Glide.with(this@AddPlayerActivity).load(playerProfile).fitCenter()
-                    .placeholder(R.drawable.ic_person)
-                    .into(imgPlayer)
                 edtPlayerName.setText(this.playerName)
                 edtPlayerAge.setText(this.age.toString())
-                edtPlayerContact.setText(this.contactNumber)
                 setCheckBox()
                 edtSoldAmount.setText(this.amount)
             }
@@ -198,9 +163,6 @@ class AddPlayerActivity : AppCompatActivity() {
 
     private fun initClickListeners() {
         binding.apply {
-            imgPlayer.setOnClickListener {
-                checkImagePermission()
-            }
 
             btnSave.setOnClickListener {
                 when {
@@ -214,26 +176,18 @@ class AddPlayerActivity : AppCompatActivity() {
                     !(radioButtonBatsman.isChecked || radioButtonBowler.isChecked || radioButtonAllRounder.isChecked) ->
                         "Check any one player speciality type".toToast(this@AddPlayerActivity)
 
-                    profileImage.isEmpty() -> "Add image  of the player".toToast(this@AddPlayerActivity)
-
                     edtSoldAmount.text.toString()
                         .isEmpty() -> "Add player sold amount".toToast(this@AddPlayerActivity)
-
-                    edtPlayerContact.text.toString().isEmpty() -> "Need Player location".toToast(
-                        this@AddPlayerActivity
-                    )
 
                     else -> {
                         val playerModel = Player(
                             playerName = playerName,
                             age = playerAge,
-                            contactNumber = playerContactNumber,
                             speciality = checkedItem,
                             amount = soldAmount,
                             batType = batType,
                             bowlType = bowlType,
                             teamName = teamName,
-                            playerProfile = profileImage
                         )
 
                         playerViewModel.insertPlayer(playerModel)
@@ -252,44 +206,6 @@ class AddPlayerActivity : AppCompatActivity() {
                 "Unable to create player, Please try again later".toToast(this)
 
             finish()
-        }
-    }
-
-    private fun checkImagePermission() {
-        when {
-            checkSelfPermission(manifestPermission) == PackageManager.PERMISSION_GRANTED -> {
-                mediaPreferences.save(Constants.PERMISSION_ASKED_AND_DENIED, false)
-                retrieveImageFromGallery()
-            }
-
-            shouldShowRequestPermissionRationale(manifestPermission) -> {
-                Snackbar.make(
-                    findViewById(android.R.id.content),
-                    "Need permission for accessing Images",
-                    Snackbar.LENGTH_INDEFINITE
-                ).setAction("Ok") {
-                    mediaPreferences.save(Constants.PERMISSION_ASKED_AND_DENIED, true)
-                    imageRequestLauncher.launch(manifestPermission)
-                }.show()
-            }
-
-            mediaPreferences.getBoolean(Constants.PERMISSION_ASKED_AND_DENIED) -> {
-                "Need permission for accessing image".toToast(this)
-                startActivity(
-                    Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS).setData(
-                        Uri.fromParts("package", packageName, null)
-                    ).apply {
-                        flags = Intent.FLAG_ACTIVITY_NEW_TASK
-                        addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY)
-                        addFlags(Intent.FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS)
-                    }
-                )
-            }
-
-            else -> {
-                mediaPreferences.save(Constants.PERMISSION_ASKED_AND_DENIED, true)
-                imageRequestLauncher.launch(manifestPermission)
-            }
         }
     }
 
@@ -332,21 +248,12 @@ class AddPlayerActivity : AppCompatActivity() {
         }
     }
 
-    private fun retrieveImageFromGallery() {
-        pickImageLauncher.launch("image/*")
-    }
-
     private fun validateFields() {
         binding.apply {
             edtPlayerName.doOnTextChanged { text, _, _, count ->
                 if (count == 0) edtPlayerName.error = "Please enter a name"
                 else playerName = text.toString()
 
-            }
-
-            edtPlayerContact.doOnTextChanged { text, _, _, count ->
-                if (count == 0) edtPlayerContact.error = "Player location needed"
-                else playerContactNumber = text.toString()
             }
 
             edtSoldAmount.doOnTextChanged { text, _, _, count ->
